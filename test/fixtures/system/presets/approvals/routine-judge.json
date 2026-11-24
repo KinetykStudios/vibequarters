@@ -1,0 +1,9 @@
+{
+  "readMe": "Test fixture: routine plus the judge; a broken yours list on purpose is not here, see the test for that.",
+  "routine": {
+    "tools": ["Read", "Glob", "Grep", "Edit"],
+    "commands": ["git status", "npm test"],
+    "hooks": []
+  },
+  "yours": { "tools": [], "hooks": [], "hookPhrases": [], "words": [] }
+}

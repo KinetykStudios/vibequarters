@@ -1,0 +1,187 @@
+{
+  "_about": {
+    "readMe": "Every key with its default. Copy only the keys you change into ~/.claude/vibequarters.config.json (the installer keeps systemDir and appDir there): a missing key means its default. An object merges key by key; a list replaces the default list. \"_about\" is documentation and is never read.",
+    "systemDir": "Where the installer copied the system (hooks, commands, rules, presets). The VibeQuarters app reads this key too.",
+    "appDir": "The VibeQuarters app's folder. Empty when the app is not installed: hooks that read it then do nothing.",
+    "appStateDir": "The folder the app keeps its runtime files in. Empty means the app folder.",
+    "coordination.liveHours": "A session unseen this many hours no longer counts as live.",
+    "coordination.lockMinutes": "Migration, deploy and merge locks expire after this many minutes.",
+    "coordination.gcDays": "Sessions unseen this many days are forgotten.",
+    "coordination.requestGcDays": "Requests and their patch files this old are forgotten.",
+    "coordination.forceHandoffMinutes": "An unanswered request may be force-handed after this many minutes.",
+    "coordination.fixerPrefix": "Sessions named <prefix> or <prefix>-<anything> cannot merge: coord.js ship opens a fresh /land tab per PR for them. Empty turns it off.",
+    "coordination.landTabOpener": "How a fixer's /land tab opens: \"vscode\" (the code CLI with a vscode://anthropic.claude-code/open URL) or \"none\".",
+    "locks": "Commands and MCP tools that take a coordination lock, one row each: lock (its name), shell (regular expression on a shell command) or tool (regular expression on an MCP tool name), deployGate (true also runs the production deploy gate and the stale-deploy check), watchPaths (folders whose uncommitted changes block that deploy). The merge lock is built in.",
+    "mergeGate.requiredChecks": "\"owner/repo\": [\"check name\", ...], the CI checks that prove a repo's tests. A repo not listed falls back to its branch protection.",
+    "mergeGate.readBranchProtection": "Read the base branch's required status checks with gh when a repo is not listed above.",
+    "mergeGate.batchRepos": "\"owner/repo\" entries whose PRs reach the default branch only inside a tested batch (merge-batch.js).",
+    "mergeGate.batchIgnoreCheck": "\"vercel\": a batch of several PRs needs main's vercel.json to skip [batch-part] commits (system/templates/vercel-ignore-build.mjs). \"none\" skips the check.",
+    "mergeGate.requirePrDeclaration": "When true, merge-batch.js build refuses a PR whose body lacks a \"Ships alone: ...\" or \"Update: <name> part <k> of <n>\" line.",
+    "mergeGate.requireReview": "A merge into a live branch needs a clean fresh review of its exact head (/land). The installer sets false when the merge-gate pack is not chosen; the CI, --admin/--auto and mass-delete checks stay on either way.",
+    "loop.autoEvolve": "true: a session that leaves lessons behind has the next one run /evolve by itself at a quiet moment. false: it only says so.",
+    "mergeGate.reviewerModel": "The model the fresh reviewer subagent must have run on, as a regular expression, any case. Empty accepts any.",
+    "mergeGate.liveBranches": "A PR into one of these branches is going live. Left at main and master, the repo's own default branch on GitHub counts too.",
+    "mergeGate.protectedBranches": "Deleting one of these branches on the remote is denied. A trailing /* covers everything under it.",
+    "mergeGate.ghBudgetMs": "Every GitHub read of one guard call shares this many milliseconds.",
+    "massDelete.fileLimit": "Deleting more files than this is denied; a merge that removes more asks first.",
+    "massDelete.projectDirs": "Folder names treated as project folders by the mass-delete guard.",
+    "hygiene.tokenPatterns": "Shapes of secrets that must never be typed into a command (regular expressions).",
+    "hygiene.heavyMaxCpu": "A heavy job (test suite, build, type check) starts only under this total CPU percent.",
+    "hygiene.inlineMaxLines": "An inline script longer than this many lines is sent to a file instead.",
+    "usage.stepUsd": "Say so each time a session passes another multiple of this many API-equivalent dollars.",
+    "usage.compactions": "And each time it compacts this many more times.",
+    "usage.idleMinutes": "And when it wakes after this long idle",
+    "usage.contextTokens": "holding at least this many tokens of context.",
+    "loop.defaultProject": "A project folder whose learning loop the loop hooks use when the session's own project has none. Empty means none.",
+    "skillspector.scanCommand": "The command that statically scans a skill, MCP server or plugin folder, shown in the reminder. {dir} is the folder.",
+    "edgeDeploy.origin": "The Origin header of the edge-function boot probe's CORS preflight.",
+    "edgeDeploy.functionsDir": "Where a project keeps its edge functions.",
+    "edgeDeploy.snapshotDir": "Where a pre-deploy snapshot of a live edge function is kept.",
+    "notify.intervalSeconds": "Seconds between attention pings.",
+    "notify.count": "How many pings, then it stops. 0: five on Windows, where they stay quiet while a terminal or editor has the focus, and one on macOS and Linux, where that cannot be told.",
+    "usageLine.warnFrom": "Percent of the plan week used before the usage line says when it runs out (mod usage-line).",
+    "hqFeed.cacheMinutes": "How long the prompt cache lives (mod hq-feed).",
+    "hqFeed.pingAtMinutes": "An idle chat's cache this old gets a keep-warm ping, only while its switch is on.",
+    "hqFeed.tickSeconds": "How often the switch and the cache's age are checked.",
+    "hqFeed.maxPings": "Pings before keep-warm stops by itself.",
+    "hqFeed.brakeModel": "Subagents on a model matching this regular expression count toward the spend brake.",
+    "hqFeed.brakeFree": "That many of them a turn starts before the brake asks.",
+    "hqFeed.pingText": "What the keep-warm ping says.",
+    "land.cloneRoot": "/land looks for a clone of the repo at <cloneRoot>/<repo>.",
+    "land.worktreeRoot": "/land makes its worktrees at <worktreeRoot>/wt-land-<repo>-<pr>.",
+    "land.deployCheck": "How /land watches a deploy after a merge: \"none\", \"vercel\" (a commit status) or \"github\" (a deployment status).",
+    "land.deployContext": "The commit status name for deployCheck \"vercel\"."
+  },
+  "systemDir": "~/.claude/vibequarters",
+  "appDir": "",
+  "appStateDir": "",
+  "coordination": {
+    "liveHours": 72,
+    "lockMinutes": 20,
+    "gcDays": 14,
+    "requestGcDays": 7,
+    "forceHandoffMinutes": 15,
+    "fixerPrefix": "",
+    "landTabOpener": "vscode"
+  },
+  "locks": [
+    {
+      "lock": "db-migration",
+      "shell": "\\bsupabase\\s+(?:db\\s+push|migration\\s+up)\\b",
+      "tool": "__apply_migration$"
+    },
+    {
+      "lock": "edge-deploy",
+      "shell": "\\bsupabase\\s+functions\\s+deploy\\b",
+      "tool": "__deploy_edge_function$",
+      "deployGate": true,
+      "watchPaths": [
+        "supabase/functions"
+      ]
+    },
+    {
+      "lock": "prod-deploy",
+      "shell": "\\bvercel\\b[^;&|\\n]*\\s(?:--prod\\b|--target[= ]production\\b)",
+      "deployGate": true
+    },
+    {
+      "lock": "prod-deploy",
+      "tool": "__deploy_to_vercel$"
+    },
+    {
+      "lock": "prod-deploy",
+      "shell": "\\bnetlify\\s+deploy\\b[^;&|\\n]*\\s--prod\\b",
+      "deployGate": true
+    },
+    {
+      "lock": "prod-deploy",
+      "shell": "\\bfly(?:ctl)?\\s+deploy\\b",
+      "deployGate": true
+    }
+  ],
+  "mergeGate": {
+    "requiredChecks": {},
+    "readBranchProtection": true,
+    "batchRepos": [],
+    "batchIgnoreCheck": "vercel",
+    "requirePrDeclaration": false,
+    "requireReview": true,
+    "reviewerModel": "opus",
+    "liveBranches": [
+      "main",
+      "master"
+    ],
+    "protectedBranches": [
+      "main",
+      "master",
+      "release/*"
+    ],
+    "ghBudgetMs": 40000
+  },
+  "massDelete": {
+    "fileLimit": 10,
+    "projectDirs": [
+      "src",
+      "supabase",
+      "public",
+      "scripts",
+      "test",
+      "tests",
+      "docs",
+      "migrations",
+      ".git"
+    ]
+  },
+  "hygiene": {
+    "tokenPatterns": [
+      "\\bgh[pousr]_[A-Za-z0-9]{30,}",
+      "\\bgithub_pat_[A-Za-z0-9_]{40,}",
+      "\\bsbp_(?:v0_)?[A-Za-z0-9]{32,}",
+      "\\bsk-ant-[A-Za-z0-9_-]{20,}",
+      "\\bsk_live_[A-Za-z0-9]{20,}",
+      "\\bAKIA[0-9A-Z]{16}\\b"
+    ],
+    "heavyMaxCpu": 75,
+    "inlineMaxLines": 5
+  },
+  "usage": {
+    "stepUsd": 150,
+    "compactions": 8,
+    "idleMinutes": 60,
+    "contextTokens": 250000
+  },
+  "loop": {
+    "defaultProject": "",
+    "autoEvolve": false
+  },
+  "skillspector": {
+    "scanCommand": ""
+  },
+  "edgeDeploy": {
+    "origin": "http://localhost:3000",
+    "functionsDir": "supabase/functions",
+    "snapshotDir": "~/.claude/edge-snapshots"
+  },
+  "notify": {
+    "intervalSeconds": 30,
+    "count": 0
+  },
+  "usageLine": {
+    "warnFrom": 50
+  },
+  "hqFeed": {
+    "cacheMinutes": 60,
+    "pingAtMinutes": 50,
+    "tickSeconds": 120,
+    "maxPings": 24,
+    "brakeModel": "opus",
+    "brakeFree": 3,
+    "pingText": "Keep-alive ping from VibeQuarters to hold the prompt cache. Reply with the single word: ok"
+  },
+  "land": {
+    "cloneRoot": "~",
+    "worktreeRoot": "~",
+    "deployCheck": "none",
+    "deployContext": "Vercel"
+  }
+}

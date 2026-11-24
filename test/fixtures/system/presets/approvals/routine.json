@@ -1,0 +1,14 @@
+{
+  "readMe": "Test fixture: a routine preset in the shape the system pack ships.",
+  "routine": {
+    "tools": ["Read", "Glob", "Grep", "Edit", "Write"],
+    "commands": ["git status", "git diff", "git add", "git commit", "npm test", "ls"],
+    "hooks": []
+  },
+  "yours": {
+    "tools": [],
+    "hooks": [],
+    "hookPhrases": [],
+    "words": ["npm publish", "rm -rf"]
+  }
+}

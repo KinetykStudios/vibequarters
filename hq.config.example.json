@@ -1,0 +1,168 @@
+{
+  "planUsd": 100,
+  "control": false,
+  "judge": false,
+  "owner": {
+    "name": "You",
+    "look": "Charcoal suit, white shirt, green tie.",
+    "avatar": {
+      "model": "charcoal-suit",
+      "skin": "#c99b78",
+      "hair": ["short", "#3d2c20"],
+      "top": "suit",
+      "jacket": "#2e3138",
+      "shirt": "#d7e4f0",
+      "tie": "#1f7a7a",
+      "pants": "#2e3138",
+      "extras": ["watch"]
+    }
+  },
+  "departments": [
+    { "name": "Builders", "color": "#7f9cf5" },
+    { "name": "Research", "color": "#5fc9a8" },
+    { "name": "Helpdesk", "color": "#e5a065" }
+  ],
+  "agents": [
+    {
+      "id": "builder",
+      "name": "Builder",
+      "dept": "Builders",
+      "agentTypes": ["general-purpose"],
+      "hangout": "chat-a",
+      "look": "Light blue shirt, sleeves rolled, dark trousers.",
+      "avatar": {
+        "model": "blue-shirt",
+        "skin": "#b98463",
+        "hair": ["curly", "#2b1e15"],
+        "top": "shirt",
+        "shirt": "#6b7a4f",
+        "pants": "#263040",
+        "sleeves": "rolled",
+        "extras": []
+      }
+    },
+    {
+      "id": "planner",
+      "name": "Planner",
+      "dept": "Builders",
+      "agentTypes": ["Plan"],
+      "hangout": "couch-b",
+      "look": "White shirt, striped tie, jeans.",
+      "avatar": {
+        "model": "shirt-tie",
+        "skin": "#e2bb98",
+        "hair": ["bun", "#5a3a22"],
+        "top": "vest",
+        "vest": "#4b5262",
+        "shirt": "#f5f5f2",
+        "tie": "#7a2531",
+        "pants": "#3a3f4a",
+        "extras": []
+      }
+    },
+    {
+      "id": "scout",
+      "name": "Scout",
+      "dept": "Research",
+      "agentTypes": ["Explore"],
+      "hangout": "window-gaze",
+      "look": "Black pantsuit, white blouse.",
+      "avatar": {
+        "model": "pantsuit",
+        "skin": "#9c6b4e",
+        "hair": ["short", "#151110"],
+        "top": "blazer",
+        "jacket": "#cbb895",
+        "shirt": "#1f3b30",
+        "pants": "#3b3530",
+        "extras": []
+      }
+    },
+    {
+      "id": "guide",
+      "name": "Guide",
+      "dept": "Helpdesk",
+      "agentTypes": ["claude-code-guide", "statusline-setup"],
+      "hangout": "bar-stool-2",
+      "look": "Tan wrap cardigan, dark jeans, boots.",
+      "avatar": {
+        "model": "tan-blazer",
+        "skin": "#f1cdb0",
+        "hair": ["long", "#7a5230"],
+        "top": "shirt",
+        "shirt": "#5e3a6e",
+        "pants": "#55585f",
+        "extras": ["glasses"]
+      }
+    }
+  ],
+  "sessionAvatars": [
+    {
+      "look": "Gray shirt, navy trousers.",
+      "avatar": {
+        "skin": "#c5926d",
+        "hair": ["short", "#2f241c"],
+        "top": "shirt",
+        "shirt": "#a9adb4",
+        "pants": "#26324a",
+        "extras": []
+      }
+    },
+    {
+      "look": "Rust shirt, charcoal trousers.",
+      "avatar": {
+        "skin": "#a7735a",
+        "hair": ["buzz", "#1b1512"],
+        "top": "shirt",
+        "shirt": "#a3532e",
+        "pants": "#33353a",
+        "extras": []
+      }
+    },
+    {
+      "look": "Navy sweater, tan chinos.",
+      "avatar": {
+        "skin": "#d9a884",
+        "hair": ["bun", "#241a14"],
+        "top": "shirt",
+        "shirt": "#2b3f66",
+        "pants": "#b49a72",
+        "extras": []
+      }
+    },
+    {
+      "look": "Forest green shirt, dark jeans, round frames.",
+      "avatar": {
+        "skin": "#8d5d40",
+        "hair": ["curly", "#17110d"],
+        "top": "shirt",
+        "shirt": "#2f5a43",
+        "pants": "#25303f",
+        "extras": ["glasses"]
+      }
+    },
+    {
+      "look": "Mustard shirt, gray trousers.",
+      "avatar": {
+        "skin": "#ecc7a6",
+        "hair": ["long", "#8a5a2f"],
+        "top": "shirt",
+        "shirt": "#c79a3a",
+        "pants": "#54585e",
+        "extras": []
+      }
+    },
+    {
+      "look": "Cream blazer over a blue top.",
+      "avatar": {
+        "skin": "#b07a55",
+        "hair": ["short", "#3a2a1e"],
+        "top": "blazer",
+        "jacket": "#d8cfbd",
+        "shirt": "#33557f",
+        "pants": "#2c2f36",
+        "extras": []
+      }
+    }
+  ]
+}

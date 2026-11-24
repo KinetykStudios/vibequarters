@@ -1,0 +1,30 @@
+# Your own config (copied from hq.config.example.json) and any secrets
+hq.config.json
+.env
+.env.*
+
+# Runtime state the server, the launcher and the bridge write in the app folder
+.filecache*.json
+.runtime.json
+.launch.lock
+.server.log
+decisions/
+inbox/
+answers.log.jsonl
+.hq-presence.json
+approve-window.json
+approvals-choice.json*
+sessions/
+assistant/sessions.json
+assistant/mcp.json
+assistant/usage.jsonl
+.demo/
+
+# Logs
+*.log
+
+# Dependencies (the app has none; tools may add them)
+node_modules/
+
+# What the system tests write while they run
+system/hooks/tests/.fixture-*/

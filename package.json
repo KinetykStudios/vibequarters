@@ -1,0 +1,15 @@
+{
+  "name": "vibequarters",
+  "version": "0.1.0",
+  "description": "A local dashboard that watches your Claude Code sessions and lets you answer their permission prompts.",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node bin/start.js",
+    "demo": "node server.js --demo",
+    "test": "node --test --test-concurrency=1 \"test/**/*.test.*\" \"system/**/*.test.js\" \"install/**/*.test.js\""
+  }
+}

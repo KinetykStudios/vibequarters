@@ -1,0 +1,19 @@
+{
+  "readMe": "A fixed list for the level engine's tests, so they do not change when the shipped approval-levels.json does.",
+  "routine": {
+    "tools": ["Read", "Glob", "Grep", "WebSearch", "WebFetch", "ToolSearch", "TodoWrite"],
+    "commands": [
+      "git status", "git diff", "git log", "git show", "git add", "git commit", "git fetch", "git branch --show-current", "git rev-parse",
+      "gh pr view", "gh pr checks", "gh pr diff", "gh pr list", "gh run view", "gh run watch", "gh run list",
+      "grep", "rg", "ls", "wc", "head", "tail", "cat", "pwd", "echo", "exit",
+      "node --test", "bun run test", "bunx vitest run", "bun run lint"
+    ],
+    "hooks": []
+  },
+  "yours": {
+    "tools": ["mcp__payments__send_money", "mcp__payments__transfer_money"],
+    "hooks": ["guard-config.js", "guard-installs.js", "guard-catastrophic.js"],
+    "hookPhrases": ["Only the owner can approve"],
+    "words": ["disable row level security", "no force row level security", "verify_jwt\":false", "verify_jwt = false", "--no-verify", "service_role", "MY_GUARD", "HUSKY=0", "core.hooksPath"]
+  }
+}

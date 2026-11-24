@@ -1,0 +1,220 @@
+/* The floor's overlay: every rule scoped under #floor, its positions absolute, so the overlay sits inside the room's box
+   on the page. */
+#floor { --bg:#05060a; --glass:rgba(14,15,20,.58); --glass-strong:rgba(16,17,23,.9); --line:rgba(255,255,255,.09); --text:#f5f5f7; --muted:#a1a1a8; --gold:#d4b060; --work:#30d158; --idle:#ff453a; --hire:#ffb547; color:var(--text); font-family:var(--font); }
+#floor canvas { display:block; outline:none; }
+#floor .labels { position:absolute; inset:0; pointer-events:none; z-index:1; } /* one layer: the CSS2D labels' own z-indexes stay under the bar, the controls and the panel */
+#floor .bar{position:absolute;top:12px;left:12px;right:12px;display:flex;align-items:center;gap:10px;padding:8px 8px 8px 16px;border-radius:16px;background:var(--glass);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border:1px solid var(--line);z-index:5}
+#floor .brand{display:flex;align-items:center;gap:10px;min-width:0;margin-right:auto;letter-spacing:normal} /* the page's .brand tracking stops here; .mark sets its own */
+#floor .mark{font-weight:700;letter-spacing:.06em;font-size:15px}
+#floor .title{font-weight:500;color:var(--muted);font-size:14px;white-space:nowrap}
+#floor .chip{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--hire);border:1px solid rgba(255,181,71,.4);padding:3px 7px;border-radius:999px}
+#floor .seg{display:flex;background:rgba(255,255,255,.06);border-radius:10px;padding:3px;gap:2px}
+#floor .seg button{all:unset;cursor:pointer;font-size:12px;font-weight:600;color:var(--muted);padding:6px 12px;border-radius:8px;transition:background .2s,color .2s}
+#floor .seg button.on{background:rgba(255,255,255,.14);color:var(--text)}
+#floor .rally{all:unset;cursor:pointer;font-size:12px;font-weight:700;color:#14110a;background:linear-gradient(180deg,#ecd08a,#c99a3b);padding:8px 14px;border-radius:999px;box-shadow:0 4px 18px rgba(212,176,96,.32);white-space:nowrap;transition:transform .15s,opacity .2s}
+#floor .rally:active{transform:scale(.97)}
+#floor .rally[disabled]{opacity:.55;cursor:default}
+#floor .seg button:focus-visible,#floor .rally:focus-visible,#floor .x:focus-visible,#floor .tag:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#floor .foot-ui{position:absolute;left:12px;right:12px;bottom:12px;display:flex;justify-content:space-between;gap:12px;pointer-events:none;z-index:4}
+#floor .pill{pointer-events:auto;font-size:12px;color:var(--muted);padding:8px 12px;border-radius:12px;background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);display:flex;gap:14px;align-items:center;margin:0}
+#floor .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px;vertical-align:1px}
+#floor .d-work{background:var(--work);box-shadow:0 0 8px var(--work);animation:pulse 1.8s ease-in-out infinite}
+#floor .d-idle{background:var(--idle);box-shadow:0 0 6px rgba(255,69,58,.55)}
+#floor .d-boss{background:var(--gold);box-shadow:0 0 8px var(--gold)}
+#floor .d-off{background:#6e6e73;box-shadow:none}
+@keyframes pulse{50%{opacity:.45}}
+#floor .tag{all:unset;pointer-events:auto;cursor:pointer;display:inline-flex;align-items:center;padding:5px 10px 5px 9px;border-radius:999px;background:rgba(14,15,20,.55);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);border:1px solid rgba(255,255,255,.1);color:var(--text);font:600 11px/1 var(--font);letter-spacing:.01em;white-space:nowrap;transition:background .2s,border-color .2s,transform .2s}
+#floor .tag.hover,#floor .tag.sel{background:rgba(28,29,36,.85);border-color:rgba(212,176,96,.65);transform:translateY(-2px)}
+#floor .tag .dot{margin-right:7px;width:6px;height:6px}
+#floor .tag .of{font-style:normal;font-weight:500;margin:0 4px;opacity:.7}
+#floor .tagw{display:flex;flex-direction:column;align-items:center;position:relative}
+/* a figure that waits on the owner (stage.js addTag): a gold ping over its tag, out of the tag's flow so the tag does not move;
+   its ring is the one CSS animation the room adds, transform and opacity only */
+#floor .ping{all:unset;box-sizing:border-box;pointer-events:auto;cursor:pointer;position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:6px;display:flex;flex-direction:column;align-items:center;gap:4px}
+#floor .ping[hidden]{display:none}
+#floor .ping:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:10px}
+#floor .bub{position:relative;width:34px;height:34px;border-radius:50%;background:var(--gold);color:#14110a;font:800 19px/34px var(--font);text-align:center}
+#floor .bub::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--gold);opacity:0;animation:ping-ring 2.4s ease-out infinite}
+@keyframes ping-ring{0%{transform:scale(1);opacity:.7}80%,100%{transform:scale(1.9);opacity:0}}
+#floor .pl{font:700 11px/1.2 var(--font);color:#14110a;background:var(--gold);padding:3px 8px;border-radius:999px;white-space:nowrap}
+#floor .tag.fail{border-color:rgba(255,69,58,.85)}
+/* a working session's second tag line (stage.js drawBadge): numbers only, so Streamer leaves it */
+#floor .bdg{display:flex;align-items:center;gap:7px;margin-top:4px;padding:4px 8px;border-radius:8px;background:rgba(8,8,10,.74);border:1px solid rgba(255,255,255,.08);color:#d8d8de;font:600 10px/1 var(--font);font-variant-numeric:tabular-nums;white-space:nowrap;pointer-events:none}
+#floor .bdg[hidden]{display:none}
+#floor .bdg .prog{display:inline-flex;align-items:center}
+#floor .bdg .prog i{display:inline-block;width:30px;height:4px;border-radius:2px;background:rgba(255,255,255,.16);overflow:hidden}
+#floor .bdg .prog b{display:block;height:100%;background:var(--work)}
+#floor .bdg .warm,#floor .bdg .ok{color:var(--work)}
+#floor .bdg .cold{color:var(--muted)}
+#floor .bdg .hot{color:var(--hire)}
+#floor .bdg .bad{color:var(--idle)}
+#floor .bdg .flag{color:#fff;background:#d70015;padding:2px 5px;border-radius:4px}
+/* the Deploys panel's rows (panels.js): the repo's last builds, each while it builds or for the hour after it ended */
+#floor .dw-h{display:flex;justify-content:space-between;margin:0 0 8px;font-weight:700;letter-spacing:.04em}
+#floor .dw-u{font-weight:500;color:var(--muted)}
+#floor .pp-deploys ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+#floor .pp-deploys li{display:grid;grid-template-columns:62px 1fr auto;gap:8px;align-items:baseline}
+#floor .dw-st{font-weight:700}
+#floor .dw-building .dw-st{color:var(--hire)}
+#floor .dw-ready .dw-st{color:var(--work)}
+#floor .dw-failed .dw-st,#floor .dw-slow .dw-st,#floor .dw-slow .dw-t{color:var(--idle)}
+#floor .dw-s{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#e6e6ea}
+#floor .dw-t{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+#floor .dw-e{display:block;margin-top:8px;color:var(--muted)}
+#floor .zone{pointer-events:none;padding:4px 8px 4px 7px;border-radius:4px;background:rgba(8,8,10,.72);border:1px solid rgba(255,255,255,.08);border-left:2px solid var(--c);color:var(--c);font:700 9px/1 var(--font);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap} /* a row's label (rooms.js): no blur, it stays on screen */
+#floor .panel{position:absolute;top:76px;right:12px;bottom:58px;width:min(380px,calc(100vw - 24px));background:var(--glass-strong);backdrop-filter:blur(24px) saturate(160%);-webkit-backdrop-filter:blur(24px) saturate(160%);border:1px solid var(--line);border-radius:20px;padding:24px 22px;z-index:6;overflow:auto;transform:translateX(calc(100% + 24px));transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+#floor .panel.open{transform:none}
+#floor .eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+#floor .panel h2{font-size:26px;font-weight:700;letter-spacing:-.015em;margin:0 0 12px;padding-right:30px}
+#floor .status{display:inline-flex;align-items:center;font-size:13px;font-weight:600;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.06);margin:0 0 10px}
+#floor .doing{font-size:14px;color:var(--muted);margin:0 0 18px}
+#floor .beat{margin:0 0 18px}
+#floor .beat .task{font-size:14px;font-weight:600;color:var(--text);margin:0 0 8px;overflow-wrap:anywhere}
+#floor .beat ul{margin:0;padding:0 0 0 18px;font-size:13px;line-height:1.5;color:#e6e6ea}
+#floor .beat li{margin:0 0 4px;overflow-wrap:anywhere}
+#floor .beat .upd{font-size:12px;color:var(--muted);margin:8px 0 0}
+#floor .look{font-size:15px;line-height:1.55;color:#e6e6ea;margin:0 0 14px}
+#floor .move{all:unset;cursor:pointer;display:inline-block;font-size:13px;font-weight:700;color:#14110a;background:linear-gradient(180deg,#ecd08a,#c99a3b);padding:9px 16px;border-radius:999px;margin:-6px 0 18px}
+#floor .move[disabled]{opacity:.5;cursor:default}
+#floor .move:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#floor .swatches{display:flex;gap:8px;margin:0 0 24px}
+#floor .swatches span{width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,255,255,.2)}
+#floor .sect{font-size:12px;font-weight:600;color:var(--muted);margin:0 0 8px}
+#floor pre{margin:0;font:12px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;color:#d8d8de;background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:12px;padding:14px;white-space:pre-wrap;word-break:break-word}
+#floor .note{font-size:12.5px;line-height:1.5;color:var(--muted);margin:14px 0 0}
+#floor .x{all:unset;cursor:pointer;position:absolute;top:16px;right:16px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:var(--muted);font-size:20px;line-height:1}
+#floor .x:hover{background:rgba(255,255,255,.08);color:var(--text)}
+#floor .loading{position:absolute;inset:0;display:grid;place-items:center;background:var(--bg);z-index:10;transition:opacity 1s;font-size:13px;color:var(--muted);letter-spacing:.06em}
+#floor .loading.done{opacity:0;pointer-events:none}
+@media (max-width:720px){
+  #floor .title,#floor .legend{display:none}
+  #floor .chip{position:absolute;top:66px;left:14px;background:var(--glass);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+  #floor .seg button{padding:6px 8px}
+  #floor .rally .long{display:none}
+  #floor .panel{top:auto;left:12px;right:12px;width:auto;height:64vh;max-height:calc(100% - 70px);transform:translateY(calc(100% + 70px))} /* never taller than the room's box, and clear of the foot bar */
+  #floor .hint{display:none}
+  #floor #pp-layer{top:100px;left:12px;right:12px;bottom:58px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px} /* the panels as a row of pills under the bar; the id outranks the rules for every width below */
+  #floor #pp-layer>.pp{position:static;width:auto}
+  #floor #pp-layer>.pp:not(.min){flex-basis:100%;max-height:50vh;order:1} /* after every pill, so the pills keep their row */
+  #floor #pp-layer .pp-pill{padding:7px 10px}
+  #floor #pp-layer .pp-pill .pp-n{display:none} /* four titles fit one row at 390 px, their counts do not; an open panel's header keeps its count */
+  /* the Assistant is the fifth, which that row has no room for: its pill sits at the room's foot, over the foot bar's
+     controls, and it opens there, the full width */
+  #floor #pp-layer>.pp-assistant{position:absolute;left:0;bottom:0;transform:none}
+  #floor #pp-layer>.pp-assistant:not(.min){right:0;width:auto;max-height:min(50vh,calc(100% - 44px))}
+}
+@media (prefers-reduced-motion:reduce){#floor .panel,#floor .loading{transition:none}#floor .d-work{animation:none}#floor .bub::after{animation:none}}
+/* streamer mode and full screen: the two foot-bar controls, the mask, and the room filling the screen */
+#floor .ctls button { all:unset; cursor:pointer; font-weight:600; color:var(--muted); transition:color .2s; }
+#floor .ctls button:hover { color:var(--text); }
+#floor .ctls button[aria-pressed="true"] { color:var(--gold); }
+#floor .ctls button:focus-visible { outline:2px solid var(--gold); outline-offset:3px; border-radius:4px; }
+#floor .masked { filter:blur(3px); user-select:none; }
+#floor:fullscreen { border-radius:0; transition:none; }
+#floor.expanded { position:fixed; inset:0; z-index:100; height:auto; min-height:0; border-radius:0; transition:none; }
+/* the glass panels over the room (panels.js): Live, Deploys, Top tools, and Sessions and agents, each one click from a
+   pill in its own corner. The layer sits over the labels (1) and under the foot bar (4), the bar (5) and the panel (6) */
+#floor .pp-layer{position:absolute;inset:0;pointer-events:none;z-index:3}
+#floor .pp{position:absolute;pointer-events:auto;padding:12px 14px;border-radius:16px;background:rgba(16,17,24,.42);backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06);max-height:calc((100% - 146px) / 2);overflow:auto;font-size:12px;--raise:rgba(255,255,255,.06);--accent-ink:var(--gold);--need:var(--hire);--bad:#ff6961;--faint:#6e6e73} /* the last five: what a Needs you card (.ask) reads that #floor lacks */
+#floor .pp-live{top:76px;left:12px;width:340px}
+#floor .pp-deploys{top:76px;right:12px;width:330px}
+#floor .pp-tools{bottom:58px;left:12px;width:340px}
+#floor .pp-team{bottom:58px;right:12px;width:400px}
+/* the Assistant (assistant.js, compact): bottom center between Top tools and Sessions and agents, its top never up in
+   the room's middle (the lowest 32% of the room is its), its conversation scrolling while the box stays put. With focus
+   inside, while the owner types or picks a button, it grows up over the room to half its height. Below about 1,190 px wide the
+   two bottom panels leave no gap, so it sits over their inner edges */
+#floor .pp-assistant{bottom:58px;left:50%;transform:translateX(-50%);z-index:1;--think:#409cff}
+#floor .pp-assistant:not(.min){width:max(320px,min(560px,calc(100% - 848px)));max-height:calc(32% - 58px)}
+#floor .pp-assistant:not(.min):focus-within{max-height:50%}
+#floor .pp-assistant .pp-b{display:flex;flex-direction:column;overflow:hidden}
+#floor .as-c{flex:1 1 auto;min-height:0;gap:8px}
+#floor .as-top{flex:1 1 auto;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;display:flex;flex-direction:column;gap:8px}
+#floor .as-c .as-log{flex:none;max-height:none;overflow:visible;gap:8px}
+#floor .as-c .as-rb{padding:8px 0 0;border-bottom:0;border-top:1px solid rgba(255,255,255,.1)}
+#floor .as-c :is(.as-m,.as-rb,.as-win){font-size:12.5px}
+#floor .as-c .as-box{flex-direction:row;align-items:center;gap:10px;padding:6px 6px 6px 11px;border-radius:12px;border-color:rgba(255,255,255,.16)}
+#floor .as-c .as-ta{flex:1;min-width:0;font-size:12.5px;max-height:60px}
+#floor .as-c .as-bar{gap:12px}
+#floor .as-c .as-hint:empty{display:none}
+#floor .as-c .as-go{padding:5px 11px;font-size:12px}
+#floor .as-c .as-use{font-size:11px}
+#floor .pp-h{display:flex;align-items:center;gap:8px;margin:0 0 10px}
+#floor .pp-h h2{margin:0;font-size:13px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+#floor .pp-n{color:var(--muted)}
+#floor .pp-h .pp-n{font-weight:500;white-space:nowrap;min-width:0;overflow:hidden;text-overflow:ellipsis} /* the header stays one line: the count gives way */
+#floor .pp-min{all:unset;box-sizing:border-box;cursor:pointer;flex:none;margin-left:auto;width:22px;height:22px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.06);display:grid;place-items:center}
+#floor .pp-min::before{content:"";width:9px;height:2px;border-radius:1px;background:var(--text);opacity:.8} /* a bar, no glyph */
+#floor .pp.min{width:auto;padding:0;overflow:visible;background:none;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+#floor .pp.min>:not(.pp-pill),#floor .pp:not(.min)>.pp-pill{display:none}
+#floor .pp-pill{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:rgba(16,17,24,.42);backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 30px rgba(0,0,0,.35);color:var(--text);font:700 11px/1.2 var(--font);white-space:nowrap}
+#floor .pp-min:focus-visible,#floor .pp-pill:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+/* the panels' contents: the header stays while the body scrolls; dots hold still (no animation in a panel) */
+#floor .pp:not(.min){display:flex;flex-direction:column}
+#floor .pp-h{flex:none}
+#floor .pp-b{min-height:0;overflow:auto}
+#floor .pp ul{list-style:none;margin:0;padding:0}
+#floor .pp .dot{flex:none;margin:0;animation:none}
+#floor .pp-none{margin:0;color:var(--muted)}
+#floor .pp-nm{min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#floor .pp-do{flex:1;min-width:0;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#floor .pp-num{font-variant-numeric:tabular-nums;color:#d8d8de;white-space:nowrap;text-align:right}
+#floor .pp-row:focus-visible,#floor .pp-tab:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+/* Live: the open Needs you cards, then a row per chat */
+#floor .pp-cards:empty{display:none}
+#floor .pp-cards .ask{margin:0 0 10px;padding:10px 11px;border:1px solid rgba(212,176,96,.55);border-radius:12px;background:rgba(212,176,96,.12);font-size:12.5px}
+#floor .pp-row{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:8px;width:100%;padding:7px 0;border-top:1px solid rgba(255,255,255,.07)}
+#floor .pp-rows>li:first-child>.pp-row{border-top:0}
+#floor .s-working,#floor .s-thinking{background:var(--work)}
+#floor .s-needs-you{background:var(--gold)}
+/* Top tools: a row per tool, its bar its share of the top one */
+#floor .pp-tool{display:grid;grid-template-columns:62px 1fr 40px;gap:8px;align-items:center;padding:4px 0}
+#floor .pp-tn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#floor .pp-track{height:6px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden}
+#floor .pp-track b{display:block;height:100%;border-radius:3px;background:var(--gold)}
+#floor .pp-total{margin:6px 0 0;color:var(--muted)}
+/* Sessions and agents: two tabs, the open one's rows */
+#floor .pp-tabs{display:flex;gap:4px;margin:0 0 8px;padding:3px;border-radius:9px;background:rgba(255,255,255,.07)}
+#floor .pp-tab{all:unset;cursor:pointer;flex:1;text-align:center;padding:5px 0;border-radius:7px;font-weight:600;color:var(--muted)}
+#floor .pp-tab[aria-pressed="true"]{background:rgba(255,255,255,.15);color:var(--text)}
+#floor .pp-sx{display:grid;grid-template-columns:minmax(0,1fr) 96px 56px 52px;gap:8px;align-items:center;padding:6px 0;border-top:1px solid rgba(255,255,255,.07)}
+#floor .pp-sh{padding-top:0;border-top:0;font-size:11px;color:var(--muted)}
+#floor .pp-sx .warm{color:var(--work)}
+#floor .pp-sx .cold{color:var(--muted)}
+/* the warning colors (warn.js): amber a heads-up, red act now */
+#floor .pp-sx .w-warn{color:var(--hire)}
+#floor .pp-sx .w-bad{color:var(--idle);font-weight:700}
+#floor .pp-ctx{height:5px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden}
+#floor .pp-ctx b{display:block;height:100%;background:var(--work)}
+#floor .pp-ctx.warn b{background:var(--hire)}
+#floor .pp-ctx.bad b{background:var(--idle)}
+#floor .pp-ag{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid rgba(255,255,255,.07)}
+#floor .pp-ag:first-child{border-top:0}
+#floor .pp-who{display:flex;flex-direction:column;flex:1 1 0%;min-width:0} /* the name's block: a second line under it joins here; it takes the room the doing word leaves */
+#floor .pp-ag .pp-do{flex:0 1 auto;max-width:50%;text-align:right} /* its whole word, a long task at most half the row */
+/* the agent switches (switches.js): the Switches button in the Sessions and agents header, a switch at the end of each
+   Agents row, and the pop-up over the room, the panels and the agent panel, inside #floor so full screen shows it */
+#floor .pp-sw{all:unset;box-sizing:border-box;cursor:pointer;flex:none;margin-left:auto;padding:4px 9px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.06);font-weight:600;line-height:1.2}
+#floor .pp-sw+.pp-min{margin-left:0}
+#floor .sw-t{all:unset;box-sizing:border-box;flex:none;display:inline-block;position:relative;width:30px;height:17px;border-radius:9px;background:rgba(255,255,255,.2);cursor:pointer}
+#floor .sw-t::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:var(--text)}
+#floor .sw-t[aria-checked="true"]{background:var(--work)}
+#floor .sw-t[aria-checked="true"]::after{left:15px}
+#floor .sw-t:disabled{opacity:.45;cursor:default}
+#floor .pp-sw:focus-visible,#floor .sw-t:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+#floor .sw-note{margin:0 0 8px}
+#floor .pp-rows>.sw-note{padding:0 0 7px}
+#floor .sw-note[hidden]+.pp-ag{border-top:0}
+#floor .sw{position:absolute;z-index:8;top:150px;left:50%;transform:translateX(-50%);box-sizing:border-box;width:460px;max-width:calc(100% - 24px);max-height:calc(100% - 208px);overflow:auto;padding:18px 20px;border-radius:20px;background:rgba(22,23,30,.85);backdrop-filter:blur(24px) saturate(150%);-webkit-backdrop-filter:blur(24px) saturate(150%);border:1px solid rgba(255,255,255,.14);box-shadow:0 20px 50px rgba(0,0,0,.45);font-size:12px}
+#floor .sw[hidden]{display:none}
+#floor .sw h2{margin:0 0 12px;padding-right:30px;font-size:15px;font-weight:700}
+#floor .sw .x{top:10px;right:10px}
+#floor .sw-r{display:flex;align-items:center;gap:10px}
+#floor .sw-nm{flex:1;min-width:0;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#floor .sw-all{padding:0 0 10px;border-bottom:1px solid rgba(255,255,255,.12)}
+#floor .sw ul{list-style:none;margin:0;padding:0}
+#floor .sw-rows>li{padding:9px 0;border-top:1px solid rgba(255,255,255,.07)}
+#floor .sw-rows>li:first-child{border-top:0}
+#floor .sw-l,#floor .sw-w{margin:3px 0 0;color:var(--muted)}
+#floor .sw-w{color:var(--text)}
+#floor .sw-f{margin:10px 0 0;color:var(--muted)}

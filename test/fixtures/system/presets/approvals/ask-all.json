@@ -1,0 +1,5 @@
+{
+  "readMe": "Test fixture: nothing is routine.",
+  "routine": { "tools": [], "commands": [], "hooks": [] },
+  "yours": { "tools": [], "hooks": [], "hookPhrases": [], "words": [] }
+}

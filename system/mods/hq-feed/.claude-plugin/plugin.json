@@ -1,0 +1,1 @@
+{ "name": "hq-feed", "version": "0.1.0", "description": "Reports this chat to the VibeQuarters app, keeps its prompt cache warm when the app switch is on, and asks before a turn starts too many expensive agents" }

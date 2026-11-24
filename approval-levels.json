@@ -1,0 +1,35 @@
+{
+  "readMe": "Approval levels for the approve window. Outside a window nothing here approves anything: you answer every prompt yourself. Inside a window you open, routine items are approved at once (the app knows the everyday options of the commands in its own lists; any other command you add counts only exactly as you wrote it); yours items are never approved for you. A yours word is matched anywhere in the call, whatever its case, quotes or spacing. Besides these lists, a command that deletes (rm of a folder, a wildcard or more than one file, del, rd, Remove-Item, find -delete and code that does the same), force pushes, deletes a branch, hard resets, deploys, publishes, merges a pull request, or empties a database table is always yours, in any flag order, behind git's global options, shortened, quoted or wrapped (lib/never-approve.js); a script file that does the same is not read. Everything else is left for you, or, only when you set \"judge\": true in hq.config.json, goes to a quick AI check on your own Claude login. Edit this file by hand. Never let a model edit the yours lists.",
+  "routine": {
+    "tools": ["Read", "Glob", "Grep", "WebSearch", "ToolSearch", "TodoWrite"],
+    "commands": [
+      "git status", "git diff", "git log", "git show", "git branch --show-current", "git rev-parse",
+      "ls", "wc", "head", "tail", "cat", "grep", "rg", "pwd", "echo", "exit"
+    ],
+    "hooks": []
+  },
+  "yours": {
+    "tools": [
+      "mcp__stripe__stripe_api_write",
+      "mcp__stripe__atlas_company_formation",
+      "mcp__stripe__manage_stripe_accounts",
+      "mcp__stripe__send_money",
+      "mcp__stripe__transfer_money",
+      "mcp__stripe__setup_recipient",
+      "mcp__vercel__buy_domain",
+      "mcp__plugin_vercel_vercel__buy_domain",
+      "mcp__plugin_stripe_stripe__send_money",
+      "mcp__plugin_stripe_stripe__transfer_money",
+      "mcp__paypal__create_refund"
+    ],
+    "hooks": [],
+    "hookPhrases": [],
+    "words": [
+      "rm -rf", "rm -fr", "rm -r ", "rmdir", "Remove-Item", "del /s", "git clean", "git reset --hard", "git branch -D", "git push --delete",
+      "--force", "push -f", "--no-verify", "HUSKY=0", "core.hooksPath", "--dangerously",
+      "drop table", "drop database", "drop schema", "truncate table", "delete from", "disable row level security",
+      "deploy", "publish", "terraform apply", "terraform destroy", "kubectl apply", "kubectl delete", "helm install", "helm upgrade",
+      "send_money", "transfer_money", "create_payout", "create_refund", "create_charge", "buy_domain", "purchase", "stripe_api_write", "manage_stripe_accounts", "company_formation", "setup_recipient", "wire_transfer", "pay_invoice"
+    ]
+  }
+}

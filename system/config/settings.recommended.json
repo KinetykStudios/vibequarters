@@ -1,0 +1,60 @@
+{
+  "_about": {
+    "readMe": "Claude Code settings that go well with the system. The installer never writes these; copy what you want into ~/.claude/settings.json. Remove \"_about\" when you do.",
+    "attribution": "Empty strings: no AI attribution in commits and pull requests (the style pack's guard denies it anyway).",
+    "autoCompactWindow": "A compact keeps a small part of the conversation, so a larger window compacts less often. The resume point survives it either way.",
+    "permissions.allow": "Reads and everyday steps that need no prompt. Guards still see every one of them.",
+    "permissions.ask": "Git and ripgrep options that skip hooks, run another program or write a file always ask, even where the plain command is allowed.",
+    "autoMode.allow": "For auto mode only, and optional: lets a merge through when you asked for it or /land's gate passed. The merge gate still checks the review and CI. Leave it out to be asked about every merge."
+  },
+  "attribution": { "commit": "", "pr": "" },
+  "autoCompactWindow": 400000,
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git status *)",
+      "Bash(git -C * status *)",
+      "Bash(git diff)",
+      "Bash(git diff *)",
+      "Bash(git -C * diff *)",
+      "Bash(git log)",
+      "Bash(git log *)",
+      "Bash(git -C * log *)",
+      "Bash(git show *)",
+      "Bash(git -C * show *)",
+      "Bash(git add *)",
+      "Bash(git -C * add *)",
+      "Bash(git commit *)",
+      "Bash(git -C * commit *)",
+      "Bash(grep *)",
+      "Bash(rg *)",
+      "Bash(ls)",
+      "Bash(ls *)",
+      "Bash(node --test*)",
+      "Bash(npm test)",
+      "Bash(npm run lint)"
+    ],
+    "ask": [
+      "Bash(git commit *--no-v*)",
+      "Bash(git -C * commit *--no-v*)",
+      "Bash(git commit -n*)",
+      "Bash(git -C * commit -n*)",
+      "Bash(git commit -an*)",
+      "Bash(git -C * commit -an*)",
+      "Bash(git commit * -n*)",
+      "Bash(git -C * commit * -n*)",
+      "Bash(git *hooksPath*)",
+      "Bash(git -C * -c *)",
+      "Bash(git *--config-env*)",
+      "Bash(git *--output*)",
+      "Bash(git *--ext-diff*)",
+      "Bash(git *difftool*)",
+      "Bash(rg *--pre*)"
+    ]
+  },
+  "autoMode": {
+    "allow": [
+      "gh pr merge --squash --match-head-commit of a pull request the user asked to land, or one whose /land gate record in ~/.claude/coordination says every check passed"
+    ]
+  }
+}
