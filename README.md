@@ -9,9 +9,9 @@ One page shows what each is doing, what it costs, and which one needs you.
 
 [![CI](https://github.com/KinetykStudios/vibequarters/actions/workflows/ci.yml/badge.svg)](https://github.com/KinetykStudios/vibequarters/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) ![Node 22+](https://img.shields.io/badge/node-22%2B-brightgreen.svg) ![No npm dependencies](https://img.shields.io/badge/npm%20dependencies-0-brightgreen.svg) ![No telemetry](https://img.shields.io/badge/telemetry-none-brightgreen.svg)
 
-![A 3D office at dusk: each Claude Code session is a person typing at a desk, and two raise a hand because they need you](docs/media/hero.webp)
+[![A 3D office at dusk where each Claude Code session is a person at a desk. A click on one opens its chat, a reply is typed on the page, and the chat goes on. Then the dashboard, with the sessions that need you](docs/media/hero.webp)](https://kinetykstudios.github.io/vibequarters/)
 
-**[▶ Watch the one-minute film](docs/media/tour.mp4)** · **[Try it in one minute](#try-it-in-one-minute)** · **[What you get](#what-you-get)** · **[Is it safe?](#is-it-safe)** · **[FAQ](#faq)**
+**[▶ Watch the 37-second film](https://kinetykstudios.github.io/vibequarters/)** · **[Try it in one minute](#try-it-in-one-minute)** · **[What you get](#what-you-get)** · **[Is it safe?](#is-it-safe)** · **[FAQ](#faq)**
 
 </div>
 
